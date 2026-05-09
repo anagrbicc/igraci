@@ -42,7 +42,7 @@ input, textarea, select {
 
 /* Navbar */
 .navbar {
-  background: var(--surface);
+  background: #252d3d;
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
   display: flex;
