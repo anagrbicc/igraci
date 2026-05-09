@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Igrači – Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+  --accent: #e63946; --gold: #f0a500;
+  --text: #e6edf3; --text-muted: #8b949e; --border: #30363d; --radius: 12px;
+}
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 1.5rem; font-weight: 800; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 0.75rem; }
+.btn { padding: 0.6rem 1.3rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #c1121f; }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-gold { background: var(--gold); color: #000; }
+.btn-lg { padding: 0.85rem 2rem; font-size: 1rem; }
+
+/* NAV TABS */
+.page-tabs { display: flex; gap: 0.5rem; margin: 0 2rem; }
+.tab { padding: 0.5rem 1.2rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text-muted); transition: all 0.2s; font-family: inherit; }
+.tab.active { background: var(--surface2); color: var(--text); border-color: var(--accent); }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* HERO */
+.hero { text-align: center; padding: 5rem 2rem 3rem; background: linear-gradient(180deg, #161b22 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 1rem; }
+.hero h1 span { color: var(--accent); }
+.hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 2rem; }
+.hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* GRID */
+.section { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+.section-title { font-size: 1.4rem; font-weight: 700; }
+.search { padding: 0.6rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.9rem; width: 260px; font-family: inherit; }
+.athletes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+
+/* ATHLETE CARD */
+.card-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+.card-wrap:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card-photo { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 4rem; color: var(--text-muted); overflow: hidden; }
+.card-photo img { width: 100%; height: 100%; object-fit: cover; }
+.card-info { padding: 1.2rem; }
+.card-sport { color: var(--accent); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+.card-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.card-club { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.card-meta { font-size: 0.8rem; color: var(--text-muted); }
+
+/* AUTH */
+.auth-wrap { min-height: calc(100vh - 64px); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.auth-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; width: 100%; max-width: 440px; }
+.auth-card h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; }
+.auth-card > p { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 0.95rem; font-family: inherit; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.auth-footer { text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
+.auth-footer a { color: var(--accent); font-weight: 600; cursor: pointer; }
+
+/* DASHBOARD */
+.dashboard { max-width: 900px; margin: 0 auto; padding: 2rem; }
+.dash-header { margin-bottom: 2rem; }
+.dash-header h1 { font-size: 2rem; font-weight: 800; }
+.dash-header p { color: var(--text-muted); }
+.dash-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; }
+.dash-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+.upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.upload-box { border: 2px dashed var(--border); border-radius: 10px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+.upload-box:hover { border-color: var(--accent); background: rgba(230,57,70,0.05); }
+.upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.upload-box .u-title { font-weight: 600; margin-bottom: 0.25rem; }
+.upload-box .u-sub { color: var(--text-muted); font-size: 0.85rem; }
+.badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; background: rgba(46,160,67,0.2); color: #3fb950; border: 1px solid rgba(46,160,67,0.3); margin-left: 0.75rem; }
+
+/* PAYMENT */
+.pay-banner { background: linear-gradient(135deg, #1a1f35 0%, #1e1226 100%); border: 1px solid rgba(240,165,0,0.3); border-radius: var(--radius); padding: 2.5rem; text-align: center; }
+.pay-banner h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+.pay-banner > p { color: var(--text-muted); margin-bottom: 1.5rem; }
+.price-tag { font-size: 3rem; font-weight: 800; color: var(--gold); margin-bottom: 1rem; }
+.price-tag span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+.perks { list-style: none; margin-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem; line-height: 2; }
+
+/* PROFILE */
+.prof-hero { background: var(--surface); border-bottom: 1px solid var(--border); }
+.prof-hero-inner { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start; }
+.prof-photo { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+.prof-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.prof-sport { color: var(--accent); font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+.prof-name { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
+.prof-club { color: var(--text-muted); margin-bottom: 1.5rem; }
+.prof-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.stat-val { font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+.stat-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.prof-body { max-width: 1100px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+.prof-section h3 { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; }
+.prof-section p { line-height: 1.8; }
+.contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.contact-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+.contact-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border); }
+.contact-item:last-child { border-bottom: none; }
+.contact-item a { color: var(--accent); }
+.video-wrap { margin-bottom: 2rem; }
+.video-mock { width: 100%; border-radius: 12px; background: #000; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 4rem; cursor: pointer; position: relative; overflow: hidden; }
+.video-mock::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #1a1a2e, #16213e); }
+.play-btn { position: relative; width: 72px; height: 72px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); border: 2px solid rgba(255,255,255,0.2); }
+.play-btn::after { content: '▶'; font-size: 1.5rem; margin-left: 4px; color: #fff; }
+
+/* SUCCESS */
+.success-page { min-height: calc(100vh - 64px); display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+.success-icon { font-size: 5rem; margin-bottom: 1.5rem; }
+.success-page h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+.success-page p { color: var(--text-muted); font-size: 1.1rem; max-width: 460px; margin: 0 auto 2rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">Igra<span>či</span></div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="page-tabs">
+      <button class="tab active" onclick="show('home',this)">Početna</button>
+      <button class="tab" onclick="show('register',this)">Registracija</button>
+      <button class="tab" onclick="show('login',this)">Prijava</button>
+      <button class="tab" onclick="show('dashboard-nopay',this)">Dashboard (neplaćen)</button>
+      <button class="tab" onclick="show('dashboard',this)">Dashboard (plaćen)</button>
+      <button class="tab" onclick="show('profile',this)">Profil sportiste</button>
+      <button class="tab" onclick="show('success',this)">Uspešno plaćanje</button>
+    </div>
+  </div>
+</nav>
+
+<!-- =================== HOME =================== -->
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>Platforma za <span>promociju</span><br>sportista</h1>
+    <p>Predstavite se svetu sporta. Kreirajte profil, dodajte video i neka vas klupski skauti i navijači pronađu.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary btn-lg">Postani sportista – 20€</button>
+      <button class="btn btn-secondary btn-lg">Prijavi se</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Sportisti (6)</div>
+      <input class="search" type="text" placeholder="Pretraži po imenu, sportu, klubu..." />
+    </div>
+    <div class="athletes-grid">
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#1a3a5c,#0d2137);font-size:5rem">⚽</div>
+        <div class="card-info">
+          <div class="card-sport">Fudbal</div>
+          <div class="card-name">Stefan Jovanović</div>
+          <div class="card-club">FK Partizan</div>
+          <div class="card-meta">22 god. · 183 cm · 77 kg</div>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#3a1a5c,#1d0d37);font-size:5rem">🏀</div>
+        <div class="card-info">
+          <div class="card-sport">Košarka</div>
+          <div class="card-name">Marko Petrović</div>
+          <div class="card-club">KK Crvena zvezda</div>
+          <div class="card-meta">25 god. · 198 cm · 95 kg</div>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#1a5c3a,#0d3720);font-size:5rem">🎾</div>
+        <div class="card-info">
+          <div class="card-sport">Tenis</div>
+          <div class="card-name">Ana Milošević</div>
+          <div class="card-club">TK Vojvodina</div>
+          <div class="card-meta">19 god. · 172 cm · 63 kg</div>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#5c3a1a,#372010);font-size:5rem">🥊</div>
+        <div class="card-info">
+          <div class="card-sport">Boks</div>
+          <div class="card-name">Nikola Đorđević</div>
+          <div class="card-club">BK Olimp</div>
+          <div class="card-meta">28 god. · 180 cm · 75 kg</div>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#1a4a5c,#0d2a37);font-size:5rem">🏊</div>
+        <div class="card-info">
+          <div class="card-sport">Plivanje</div>
+          <div class="card-name">Jovana Nikolić</div>
+          <div class="card-club">PK Beograd</div>
+          <div class="card-meta">21 god. · 170 cm · 60 kg</div>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <div class="card-photo" style="background:linear-gradient(135deg,#5c1a3a,#370d20);font-size:5rem">🏃</div>
+        <div class="card-info">
+          <div class="card-sport">Atletika</div>
+          <div class="card-name">Aleksandar Stojanović</div>
+          <div class="card-club">AK Srbija</div>
+          <div class="card-meta">24 god. · 188 cm · 80 kg</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== REGISTER =================== -->
+<div id="register" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Kreirajte nalog</h2>
+      <p>Registrujte se i platite 20€ da biste aktivirali vaš sportski profil.</p>
+      <div class="form-group">
+        <label>Email adresa</label>
+        <input type="email" placeholder="vase@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Lozinka</label>
+        <input type="password" placeholder="Minimum 6 znakova" />
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;margin-top:0.5rem">Registruj se</button>
+      <div class="auth-footer">Već imate nalog? <a>Prijavite se</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== LOGIN =================== -->
+<div id="login" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Prijavite se</h2>
+      <p>Dobrodošli nazad na Igrači platformu.</p>
+      <div class="form-group">
+        <label>Email adresa</label>
+        <input type="email" placeholder="vase@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Lozinka</label>
+        <input type="password" placeholder="Vaša lozinka" />
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;margin-top:0.5rem">Prijavi se</button>
+      <div class="auth-footer">Nemate nalog? <a>Registrujte se</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== DASHBOARD (NEPLAĆEN) =================== -->
+<div id="dashboard-nopay" class="page">
+  <div class="dashboard">
+    <div class="dash-header">
+      <h1>Moj profil</h1>
+      <p>Dobrodošli, stefan@email.com</p>
+    </div>
+    <div class="pay-banner">
+      <h2>Aktivirajte vaš sportski profil</h2>
+      <p>Platite jednokratnu godišnju naknadu i počnite da se promovišete.</p>
+      <div class="price-tag">20€ <span>/ godišnje</span></div>
+      <ul class="perks">
+        <li>✓ Javni sportski profil</li>
+        <li>✓ Upload fotografije</li>
+        <li>✓ Upload promotivnog videa</li>
+        <li>✓ Vidljivo skautima i navijačima</li>
+      </ul>
+      <button class="btn btn-gold btn-lg">Plati 20€ i aktiviraj profil</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== DASHBOARD (PLAĆEN) =================== -->
+<div id="dashboard" class="page">
+  <div class="dashboard">
+    <div class="dash-header">
+      <h1>Moj profil</h1>
+      <p>stefan@email.com <span class="badge">Aktiviran</span> &nbsp;<a style="color:var(--accent);font-size:0.9rem">Pogledaj javni profil →</a></p>
+    </div>
+    <div class="dash-card">
+      <h3>Fotografija i video</h3>
+      <div class="upload-row">
+        <div>
+          <div style="font-weight:600;font-size:0.9rem;margin-bottom:0.75rem">Profilna fotografija</div>
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#1a3a5c,#0d2137);display:flex;align-items:center;justify-content:center;font-size:3rem;border:3px solid var(--accent);margin:0 auto 1rem">⚽</div>
+          <div class="upload-box">
+            <div class="upload-icon">📷</div>
+            <div class="u-title">Promeni fotografiju</div>
+            <div class="u-sub">JPG, PNG, WebP – max 5MB</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:0.9rem;margin-bottom:0.75rem">Promotivni video</div>
+          <div class="upload-box" style="margin-bottom:0.75rem">
+            <div class="upload-icon">🎬</div>
+            <div class="u-title">Dodaj video</div>
+            <div class="u-sub">MP4, WebM, MOV – max 200MB</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-card">
+      <h3>Osnovni podaci</h3>
+      <div class="form-group"><label>Puno ime *</label><input type="text" value="Stefan Jovanović" /></div>
+      <div class="form-row">
+        <div class="form-group"><label>Sport *</label><select><option>Fudbal</option></select></div>
+        <div class="form-group"><label>Klub / Tim</label><input type="text" value="FK Partizan" /></div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Godine</label><input type="number" value="22" /></div>
+        <div class="form-group"><label>Visina (cm)</label><input type="number" value="183" /></div>
+        <div class="form-group"><label>Težina (kg)</label><input type="number" value="77" /></div>
+      </div>
+      <div class="form-group"><label>O sebi / Biografija</label><textarea>Profesionalni fudbaler sa 8 godina iskustva u vrhunskom fudbalu. Igram kao centralni vezni igrač, poznat po viziji igre i preciznim pasovima.</textarea></div>
+      <div class="form-group"><label>Dostignuća i trofeje</label><textarea>• Prvak Srbije 2023
+• Kup Srbije finalist 2022
+• Najbolji mladi igrač sezone 2021</textarea></div>
+    </div>
+    <div class="dash-card">
+      <h3>Kontakt podaci</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Kontakt email</label><input type="email" value="stefan.jovanovic@email.com" /></div>
+        <div class="form-group"><label>Telefon</label><input type="tel" value="+381 63 123 4567" /></div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-lg">Sačuvaj profil</button>
+  </div>
+</div>
+
+<!-- =================== PROFILE =================== -->
+<div id="profile" class="page">
+  <div class="prof-hero">
+    <div class="prof-hero-inner">
+      <div class="prof-photo" style="background:linear-gradient(135deg,#1a3a5c,#0d2137)">⚽</div>
+      <div>
+        <div class="prof-sport">Fudbal</div>
+        <h1 class="prof-name">Stefan Jovanović</h1>
+        <div class="prof-club">📍 FK Partizan</div>
+        <div class="prof-stats">
+          <div class="prof-stat">
+            <div class="stat-val">22</div>
+            <div class="stat-lbl">Godine</div>
+          </div>
+          <div class="prof-stat">
+            <div class="stat-val">183</div>
+            <div class="stat-lbl">Visina (cm)</div>
+          </div>
+          <div class="prof-stat">
+            <div class="stat-val">77</div>
+            <div class="stat-lbl">Težina (kg)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="prof-body">
+    <div>
+      <div class="video-wrap">
+        <div class="prof-section"><h3>Promotivni video</h3></div>
+        <div class="video-mock"><div class="play-btn"></div></div>
+      </div>
+      <div class="prof-section" style="margin-bottom:2rem">
+        <h3>O sportistu</h3>
+        <p>Profesionalni fudbaler sa 8 godina iskustva u vrhunskom fudbalu. Igram kao centralni vezni igrač, poznat po viziji igre i preciznim pasovima. Svoju karijeru sam gradio kroz omladinski pogon FK Partizana, gde sam i debito u Superligi Srbije sa 18 godina.</p>
+      </div>
+      <div class="prof-section">
+        <h3>Dostignuća</h3>
+        <p>• Prvak Srbije 2023<br>• Kup Srbije finalist 2022<br>• Najbolji mladi igrač sezone 2021<br>• Reprezentativac Srbije U-21 (12 nastupa)</p>
+      </div>
+    </div>
+    <div>
+      <div class="contact-card">
+        <h3>Kontakt</h3>
+        <div class="contact-item"><span>✉️</span><a>stefan.jovanovic@email.com</a></div>
+        <div class="contact-item"><span>📱</span><span>+381 63 123 4567</span></div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <button class="btn btn-secondary" style="width:100%">← Nazad</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SUCCESS =================== -->
+<div id="success" class="page">
+  <div class="success-page">
+    <div>
+      <div class="success-icon">🎉</div>
+      <h1>Plaćanje uspešno!</h1>
+      <p>Vaš nalog je aktiviran. Sada možete kreirati vaš sportski profil i dodati video.</p>
+      <button class="btn btn-gold btn-lg">Kreiraj profil →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
