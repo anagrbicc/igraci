@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pink Affair – Kafić</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --pink:#ff4d8d;
+  --pink-light:#ff85b3;
+  --pink-pale:#fff0f5;
+  --coral:#ff6b6b;
+  --yellow:#ffd166;
+  --purple:#c77dff;
+  --mint:#06d6a0;
+  --dark:#1a0a0f;
+  --dark2:#2d1520;
+  --text:#3d1a28;
+  --text-muted:#8c6070;
+  --white:#ffffff;
+  --radius:16px;
+  --shadow:0 8px 32px rgba(255,77,141,0.18);
+}
+body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,77,141,0.12);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 4px 24px rgba(255,77,141,0.15)}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{
+  font-size:0.9rem;font-weight:500;color:var(--text-muted);
+  transition:color 0.2s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;
+  background:var(--pink);border-radius:2px;
+  transform:scaleX(0);transition:transform 0.2s;
+}
+.nav-links a:hover{color:var(--pink)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.btn-nav{
+  background:linear-gradient(135deg,var(--pink),var(--coral));
+  color:#fff;border:none;padding:0.6rem 1.4rem;
+  border-radius:100px;font-size:0.9rem;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 16px rgba(255,77,141,0.4);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,77,141,0.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--pink);border-radius:2px;transition:all 0.3s}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:7rem 2rem 4rem;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(160deg,#fff0f5 0%,#fce4ec 40%,#f3e5f5 100%);
+}
+.hero-blobs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.blob{
+  position:absolute;border-radius:50%;
+  filter:blur(60px);opacity:0.35;
+  animation:float 8s ease-in-out infinite;
+}
+.blob-1{width:500px;height:500px;background:var(--pink);top:-100px;left:-150px;animation-delay:0s}
+.blob-2{width:400px;height:400px;background:var(--purple);bottom:-80px;right:-100px;animation-delay:3s}
+.blob-3{width:300px;height:300px;background:var(--yellow);top:30%;right:10%;animation-delay:1.5s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(255,77,141,0.12);border:1px solid rgba(255,77,141,0.25);
+  color:var(--pink);border-radius:100px;
+  padding:0.4rem 1rem;font-size:0.85rem;font-weight:600;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.6s ease both;
+}
+.hero-badge span{font-size:1.1rem}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,6rem);
+  font-weight:900;
+  line-height:1.1;
+  margin-bottom:1.5rem;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--pink),var(--purple),var(--coral));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{
+  font-size:1.15rem;color:var(--text-muted);max-width:520px;margin:0 auto 2.5rem;
+  line-height:1.8;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-actions{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--pink),var(--coral));
+  color:#fff;border:none;padding:0.9rem 2.2rem;
+  border-radius:100px;font-size:1rem;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 28px rgba(255,77,141,0.45);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(255,77,141,0.55)}
+.btn-secondary{
+  background:transparent;color:var(--pink);
+  border:2px solid var(--pink);padding:0.9rem 2.2rem;
+  border-radius:100px;font-size:1rem;font-weight:600;
+  cursor:pointer;font-family:inherit;
+  transition:all 0.2s;
+}
+.btn-secondary:hover{background:var(--pink);color:#fff}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  color:var(--text-muted);font-size:0.8rem;
+  animation:bounce 2s infinite;
+}
+.hero-scroll-dot{width:6px;height:6px;background:var(--pink);border-radius:50%}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTIONS ── */
+section{padding:6rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+.section-tag{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--pink-pale),#f3e5f5);
+  color:var(--pink);border-radius:100px;
+  padding:0.35rem 1.1rem;font-size:0.8rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:900;line-height:1.2;
+  margin-bottom:1rem;
+}
+.section-sub{color:var(--text-muted);font-size:1rem;line-height:1.8;max-width:560px}
+
+/* ── MENU ── */
+#meni{background:#fff}
+.menu-tabs{
+  display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:3rem;
+}
+.menu-tab{
+  padding:0.6rem 1.4rem;border-radius:100px;
+  border:2px solid #f0d0dd;background:transparent;
+  color:var(--text-muted);font-size:0.9rem;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.menu-tab.active,.menu-tab:hover{
+  background:linear-gradient(135deg,var(--pink),var(--coral));
+  color:#fff;border-color:transparent;
+  box-shadow:0 4px 16px rgba(255,77,141,0.35);
+}
+.menu-category{display:none}
+.menu-category.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.menu-card{
+  background:#fff;border:1.5px solid #fce4ec;
+  border-radius:var(--radius);padding:1.5rem;
+  display:flex;gap:1.2rem;align-items:flex-start;
+  transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+}
+.menu-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--pink-light)}
+.menu-emoji{
+  font-size:2.5rem;background:var(--pink-pale);
+  width:60px;height:60px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.menu-card-body{flex:1}
+.menu-card-name{font-weight:700;font-size:1rem;margin-bottom:0.25rem}
+.menu-card-desc{font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:0.75rem}
+.menu-card-price{
+  font-size:1rem;font-weight:700;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ── ABOUT ── */
+#o-nama{
+  background:linear-gradient(160deg,#1a0a0f 0%,#2d1520 60%,#1e0d26 100%);
+  color:#fff;position:relative;overflow:hidden;
+}
+#o-nama .section-tag{background:rgba(255,77,141,0.2);color:var(--pink-light)}
+#o-nama .section-title{color:#fff}
+#o-nama .section-sub{color:rgba(255,255,255,0.6)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-visual{
+  position:relative;
+}
+.about-photo-main{
+  width:100%;aspect-ratio:4/5;
+  border-radius:24px;
+  background:linear-gradient(160deg,#ff4d8d,#c77dff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8rem;
+  position:relative;overflow:hidden;
+}
+.about-photo-main::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,77,141,0.8),rgba(199,125,255,0.8));
+}
+.about-photo-main span{position:relative;z-index:1}
+.about-badge{
+  position:absolute;bottom:-1rem;right:-1rem;
+  background:linear-gradient(135deg,var(--yellow),#ff9f43);
+  color:#1a0a0f;border-radius:16px;
+  padding:1rem 1.4rem;text-align:center;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+.about-badge .val{font-size:2rem;font-weight:900;font-family:'Playfair Display',serif;display:block}
+.about-badge .lbl{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.about-features{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem}
+.feature-item{display:flex;gap:1rem;align-items:flex-start}
+.feature-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.fi-pink{background:rgba(255,77,141,0.2)}
+.fi-purple{background:rgba(199,125,255,0.2)}
+.fi-yellow{background:rgba(255,209,102,0.2)}
+.fi-mint{background:rgba(6,214,160,0.2)}
+.feature-item h4{font-size:0.95rem;font-weight:600;margin-bottom:0.2rem;color:#fff}
+.feature-item p{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6}
+
+/* ── GALLERY ── */
+#galerija{background:var(--pink-pale)}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,220px);
+  gap:1rem;
+  margin-top:3rem;
+}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;
+  cursor:pointer;position:relative;
+  transition:transform 0.3s;
+}
+.gallery-item:hover{transform:scale(1.03)}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gallery-item:nth-child(4){grid-column:span 2}
+.gallery-photo{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;
+}
+.gallery-item:nth-child(1) .gallery-photo{font-size:5rem}
+.g1{background:linear-gradient(135deg,#ff4d8d,#c77dff)}
+.g2{background:linear-gradient(135deg,#ffd166,#ff9f43)}
+.g3{background:linear-gradient(135deg,#06d6a0,#0096c7)}
+.g4{background:linear-gradient(135deg,#ff6b6b,#ee5a24)}
+.g5{background:linear-gradient(135deg,#a29bfe,#6c5ce7)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:rgba(255,77,141,0.7);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 0.3s;
+  color:#fff;font-size:2rem;
+}
+
+/* ── RADNO VREME ── */
+.hours-strip{
+  background:linear-gradient(135deg,var(--pink),var(--purple),var(--coral));
+  padding:3rem 2rem;text-align:center;color:#fff;
+}
+.hours-grid{
+  display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;
+  max-width:800px;margin:0 auto;
+}
+.hour-item{text-align:center}
+.hour-day{font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;opacity:0.8;margin-bottom:0.4rem}
+.hour-time{font-size:1.3rem;font-weight:700;font-family:'Playfair Display',serif}
+
+/* ── CONTACT ── */
+#kontakt{background:#fff}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.contact-item{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  padding:1.4rem;border-radius:var(--radius);
+  background:var(--pink-pale);border:1.5px solid #fce4ec;
+  transition:transform 0.2s,border-color 0.2s;
+}
+.contact-item:hover{transform:translateY(-3px);border-color:var(--pink-light)}
+.contact-icon{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--pink),var(--coral));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.contact-item h4{font-size:0.9rem;color:var(--text-muted);margin-bottom:0.2rem;font-weight:500}
+.contact-item p{font-size:1rem;font-weight:600;color:var(--text)}
+.map-placeholder{
+  width:100%;aspect-ratio:4/3;
+  background:linear-gradient(160deg,#fce4ec,#f3e5f5);
+  border-radius:24px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:1rem;color:var(--text-muted);
+  border:1.5px solid #fce4ec;
+  font-size:0.9rem;
+}
+.map-placeholder span{font-size:4rem}
+
+/* ── NEWSLETTER ── */
+.newsletter{
+  background:linear-gradient(160deg,var(--dark),var(--dark2));
+  padding:5rem 2rem;text-align:center;color:#fff;
+}
+.newsletter h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3vw,2.5rem);
+  margin-bottom:1rem;
+}
+.newsletter p{color:rgba(255,255,255,0.6);margin-bottom:2rem}
+.nl-form{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.nl-input{
+  padding:0.85rem 1.4rem;
+  border-radius:100px;border:none;
+  background:rgba(255,255,255,0.12);
+  color:#fff;font-size:0.95rem;font-family:inherit;
+  width:300px;max-width:100%;
+  border:1.5px solid rgba(255,255,255,0.2);
+  outline:none;transition:border-color 0.2s;
+}
+.nl-input::placeholder{color:rgba(255,255,255,0.4)}
+.nl-input:focus{border-color:var(--pink-light)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);
+  padding:2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+  border-top:1px solid rgba(255,77,141,0.15);
+}
+.footer-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:900;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:0.85rem}
+.footer-social{display:flex;gap:1rem}
+.social-btn{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;transition:background 0.2s;
+  cursor:pointer;
+}
+.social-btn:hover{background:rgba(255,77,141,0.3)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 1;aspect-ratio:16/9}
+  .gallery-item:nth-child(4){grid-column:span 2}
+  .prof-hero-inner{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;inset:0;top:72px;
+    background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);
+    padding:2rem;gap:1.5rem;z-index:998;
+  }
+  .nav-links.open a{font-size:1.3rem}
+  .gallery-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .gallery-item:nth-child(1){grid-column:span 1;aspect-ratio:4/3}
+  .gallery-item:nth-child(4){grid-column:span 1}
+  .hours-grid{gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Pink Affair</div>
+  <div class="nav-links" id="navLinks">
+    <a href="#meni">Meni</a>
+    <a href="#o-nama">O nama</a>
+    <a href="#galerija">Galerija</a>
+    <a href="#kontakt">Kontakt</a>
+    <button class="btn-nav" onclick="document.getElementById('kontakt').scrollIntoView({behavior:'smooth'})">Rezerviši sto</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Meni">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="pocetna">
+  <div class="hero-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-badge"><span>☕</span> Dobrodošli u Pink Affair</div>
+    <h1>Gde svaki gutljaj<br>postaje <span class="grad">avantura</span></h1>
+    <p>Kafić u srcu grada — posebno za one koji vole kavu, dobro raspoloženje i roze vibracije.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('meni').scrollIntoView({behavior:'smooth'})">Pogledaj meni ☕</button>
+      <button class="btn-secondary" onclick="document.getElementById('o-nama').scrollIntoView({behavior:'smooth'})">Saznaj više</button>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span style="font-size:0.8rem;color:var(--text-muted)">Skroluj dole</span>
+    <div class="hero-scroll-dot"></div>
+  </div>
+</section>
+
+<!-- MENI -->
+<section id="meni">
+  <div class="container">
+    <div class="section-tag">☕ Naša ponuda</div>
+    <h2 class="section-title">Meni koji će te<br>oduševiti</h2>
+    <p class="section-sub" style="margin-bottom:2.5rem">Svježe pripremljeni napici i zalogaji napravljeni sa ljubavlju.</p>
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="switchTab('kafe',this)">☕ Kafa</button>
+      <button class="menu-tab" onclick="switchTab('napici',this)">🥤 Hladni napici</button>
+      <button class="menu-tab" onclick="switchTab('hrana',this)">🥐 Hrana</button>
+      <button class="menu-tab" onclick="switchTab('deserti',this)">🍰 Deserti</button>
+    </div>
+
+    <div class="menu-category active" id="cat-kafe">
+      <div class="menu-card"><div class="menu-emoji">☕</div><div class="menu-card-body"><div class="menu-card-name">Espresso</div><div class="menu-card-desc">Intenzivan, kremast i savršeno izbalansiran. Osnova svake kafe.</div><div class="menu-card-price">150 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🫖</div><div class="menu-card-body"><div class="menu-card-name">Cappuccino</div><div class="menu-card-desc">Espresso, toplo mleko i svilenkasta pena — klasik koji nikad ne greši.</div><div class="menu-card-price">230 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">☕</div><div class="menu-card-body"><div class="menu-card-name">Latte</div><div class="menu-card-desc">Kremast i blag — idealan za one koji vole nežniji ukus kafe.</div><div class="menu-card-price">250 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">💗</div><div class="menu-card-body"><div class="menu-card-name">Pink Latte (signature)</div><div class="menu-card-desc">Naš specijalitet — latte s ružičastim velvet sirupom i slatkim mlekom. Savršen za Instagram!</div><div class="menu-card-price">320 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🍯</div><div class="menu-card-body"><div class="menu-card-name">Honey Flat White</div><div class="menu-card-desc">Flat white s domaćim medom i cimetom. Toplo grljenje u šolji.</div><div class="menu-card-price">280 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🌸</div><div class="menu-card-body"><div class="menu-card-name">Rose Macchiato</div><div class="menu-card-desc">Espresso s ružinom vodom i penom od mleka. Elegantno i mirisno.</div><div class="menu-card-price">300 RSD</div></div></div>
+    </div>
+
+    <div class="menu-category" id="cat-napici">
+      <div class="menu-card"><div class="menu-emoji">🧃</div><div class="menu-card-body"><div class="menu-card-name">Ledeni chai latte</div><div class="menu-card-desc">Začinski chai s ledenim mlekom i slatkim cimetom.</div><div class="menu-card-price">290 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🫐</div><div class="menu-card-body"><div class="menu-card-name">Blueberry Lemonade</div><div class="menu-card-desc">Svježe iscijeđen limun s borovnicama i menticom. Osvježavajuće!</div><div class="menu-card-price">270 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🍓</div><div class="menu-card-body"><div class="menu-card-name">Strawberry Matcha</div><div class="menu-card-desc">Matcha s jagodom i kokosovim mlekom — naš hit letnji napitak.</div><div class="menu-card-price">310 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🧋</div><div class="menu-card-body"><div class="menu-card-name">Bubble Tea</div><div class="menu-card-desc">Klasični taro ili jagoda bubble tea s tapioka perlicama.</div><div class="menu-card-price">350 RSD</div></div></div>
+    </div>
+
+    <div class="menu-category" id="cat-hrana">
+      <div class="menu-card"><div class="menu-emoji">🥐</div><div class="menu-card-body"><div class="menu-card-name">Butter Croissant</div><div class="menu-card-desc">Svježe pečen, hrskav spolja i mekan iznutra. Svakodnevni ritual.</div><div class="menu-card-price">180 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🥑</div><div class="menu-card-body"><div class="menu-card-name">Avocado Toast</div><div class="menu-card-desc">Sourdough tost s avocadom, cherry paradajzom i feta sirom.</div><div class="menu-card-price">420 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🧇</div><div class="menu-card-body"><div class="menu-card-name">Waffle Brunch</div><div class="menu-card-desc">Domaći vafli s jagodama, šlagom i javorovim sirupom.</div><div class="menu-card-price">490 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🥗</div><div class="menu-card-body"><div class="menu-card-name">Pink Power Bowl</div><div class="menu-card-desc">Açaí bowl s bananom, granolom i svežim voćem. Energija za ceo dan!</div><div class="menu-card-price">550 RSD</div></div></div>
+    </div>
+
+    <div class="menu-category" id="cat-deserti">
+      <div class="menu-card"><div class="menu-emoji">🍰</div><div class="menu-card-body"><div class="menu-card-name">Cheesecake</div><div class="menu-card-desc">New York cheesecake s malinom i bademovom korom. Neodoljivo!</div><div class="menu-card-price">380 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🍫</div><div class="menu-card-body"><div class="menu-card-name">Čokoladni lava kolač</div><div class="menu-card-desc">Topli čokoladni kolačić s tečnom sredinom i sladoledom od vanile.</div><div class="menu-card-price">420 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🌹</div><div class="menu-card-body"><div class="menu-card-name">Rose Tiramisu</div><div class="menu-card-desc">Klasično tiramisu s ružinom vodom i ljuspicom pistacija.</div><div class="menu-card-price">400 RSD</div></div></div>
+      <div class="menu-card"><div class="menu-emoji">🍭</div><div class="menu-card-body"><div class="menu-card-name">Cotton Candy Cake</div><div class="menu-card-desc">Naš roze šećerasti specijalitet — savršen za fotografije i za jelo!</div><div class="menu-card-price">450 RSD</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- O NAMA -->
+<section id="o-nama">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-photo-main"><span>☕</span></div>
+        <div class="about-badge">
+          <span class="val">5★</span>
+          <span class="lbl">Ocena gostiju</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag">🌸 Naša priča</div>
+        <h2 class="section-title">Više od kafića —<br>to je Pink Affair</h2>
+        <p class="section-sub">Otvorili smo Pink Affair sa jednom idejom: da napravimo mesto gde se svako oseća posebno. Gde kafa nije samo piće, već iskustvo — vizualno, mirisno, ukusno.</p>
+        <div class="about-features">
+          <div class="feature-item">
+            <div class="feature-icon fi-pink">🌸</div>
+            <div>
+              <h4>Jedinstven dizajn</h4>
+              <p>Svaki kutak naš je dizajniran s pažnjom — savršen za odmor ili fotografisanje.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon fi-purple">☕</div>
+            <div>
+              <h4>Pažljivo odabrana kafa</h4>
+              <p>Radimo samo s manjim, etičkim farmama kafe iz Etiopije i Kolumbije.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon fi-yellow">🌿</div>
+            <div>
+              <h4>Svježi, lokalni sastojci</h4>
+              <p>Sve što servirana dolazi od lokalnih proizvođača. Svježe, ukusno, odgovorno.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon fi-mint">💫</div>
+            <div>
+              <h4>Posebna atmosfera</h4>
+              <p>Živa muzika vikendom, knjige, i uvek osmeh — jer to je Pink Affair.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIJA -->
+<section id="galerija">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">📸 Atmosfera</div>
+      <h2 class="section-title">Zaviri u Pink Affair</h2>
+      <p class="section-sub" style="margin:0 auto">Svaki kutak priča svoju priču.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g1"><div class="gallery-photo">☕</div><div class="gallery-overlay">+</div></div>
+      <div class="gallery-item g2"><div class="gallery-photo">🥐</div><div class="gallery-overlay">+</div></div>
+      <div class="gallery-item g3"><div class="gallery-photo">🌸</div><div class="gallery-overlay">+</div></div>
+      <div class="gallery-item g4"><div class="gallery-photo">🍰</div><div class="gallery-overlay">+</div></div>
+      <div class="gallery-item g5"><div class="gallery-photo">💗</div><div class="gallery-overlay">+</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RADNO VREME -->
+<div class="hours-strip">
+  <div class="hours-grid">
+    <div class="hour-item"><div class="hour-day">Pon – Pet</div><div class="hour-time">08:00 – 22:00</div></div>
+    <div class="hour-item"><div class="hour-day">Subota</div><div class="hour-time">09:00 – 23:00</div></div>
+    <div class="hour-item"><div class="hour-day">Nedjelja</div><div class="hour-time">10:00 – 21:00</div></div>
+    <div class="hour-item"><div class="hour-day">Telefon</div><div class="hour-time">+381 11 234 5678</div></div>
+  </div>
+</div>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <div class="section-tag">📍 Pronađi nas</div>
+    <h2 class="section-title">Dođi na kafu</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><h4>Adresa</h4><p>Knez Mihailova 15, Beograd</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><h4>Telefon</h4><p>+381 11 234 5678</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><h4>Email</h4><p>hello@pinkaffair.rs</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div><h4>Instagram</h4><p>@pinkaffair.belgrade</p></div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <span>🗺️</span>
+        <strong>Knez Mihailova 15</strong>
+        <span style="font-size:0.85rem">Beograd, Srbija</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Budi prva koja sazna 🌸</h2>
+  <p>Prijavi se i dobijaj ekskluzivne ponude, nove stavke menija i Pink Affair vijesti.</p>
+  <div class="nl-form">
+    <input class="nl-input" type="email" placeholder="tvoj@email.com" />
+    <button class="btn-primary">Prijavi se ✨</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Pink Affair</div>
+  <div class="footer-copy">© 2025 Pink Affair. Sva prava zadržana.</div>
+  <div class="footer-social">
+    <div class="social-btn">📸</div>
+    <div class="social-btn">🐦</div>
+    <div class="social-btn">📘</div>
+  </div>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+function switchTab(cat, btn) {
+  document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
+  btn.classList.add('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.style.opacity = 1; });
+}, { threshold: 0.1 });
+document.querySelectorAll('.menu-card, .contact-item, .gallery-item, .feature-item').forEach(el => {
+  el.style.opacity = 0;
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
